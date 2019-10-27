@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Exercise</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_text">ACME Advice</string>
+    <string name="bt_load_text">Load Next Advice</string>
+    <string name="image_content_des">quote</string>
+    <string name="default_message">A penny saved is a penny earned</string>
+    <string name="default_message_second">It\'s easier to light a candle than to cause the darkness</string>
+</resources>
