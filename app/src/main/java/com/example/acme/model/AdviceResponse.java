@@ -11,5 +11,6 @@ import lombok.Setter;
 @Setter
 public class AdviceResponse implements Serializable {
 
+    //advice list
     private List<String> fortune = new ArrayList<>();
 }
