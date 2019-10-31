@@ -2,7 +2,7 @@ package com.example.acme.ui.contract;
 
 import androidx.annotation.NonNull;
 
-import com.example.acme.base.BaseView;
+import com.example.acme.ui.base.BaseView;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.acme.base;
+package com.example.acme.ui.base;
 
 public interface BaseView <T extends BasePresenter> {
 

@@ -1,13 +1,25 @@
-package com.example.acme.base;
+package com.example.acme.ui.base;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class BaseActivity extends AppCompatActivity {
+import dagger.android.AndroidInjection;
+
+public abstract class BaseActivity extends AppCompatActivity {
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment activeFragment;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidInjection.inject(this);
+
+    }
 
 
     protected void addFragment(Fragment fragment, int containerId){
@@ -20,6 +32,8 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     protected  void showFragment(Fragment fragment){
 

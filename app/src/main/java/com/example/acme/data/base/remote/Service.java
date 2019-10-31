@@ -1,6 +1,10 @@
 package com.example.acme.data.base.remote;
 
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -12,7 +16,12 @@ public class Service {
     private static Retrofit retrofit;
     private static final String BASE_URL = "http://api.acme.international/";
 
-    public static Retrofit getRetrofitInstance() {
+    @Inject
+    public Service(){
+        //
+    }
+
+    private static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -28,5 +37,10 @@ public class Service {
                     .build();
         }
         return retrofit;
+    }
+
+    public <T> T create(@NonNull Class<T> classService) {
+
+        return getRetrofitInstance().create(classService);
     }
 }

@@ -3,25 +3,37 @@ package com.example.acme.ui;
 import com.example.acme.data.repository.AdviceRepository;
 import com.example.acme.ui.contract.Presenter;
 import com.example.acme.ui.contract.View;
+import com.example.acme.utils.rx.ScheduleProvider;
 
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+
 
 public class ViewPresenter implements Presenter {
 
-    View mView ;
-    private  CompositeDisposable disposable = new CompositeDisposable();
+    private View mView ;
+    private final ScheduleProvider mSchedulerProvider;
+    private final CompositeDisposable mCompositeDisposable;
+    private final AdviceRepository adviceRepository;
+
+    @Inject
+    public ViewPresenter( ScheduleProvider schedule, CompositeDisposable disposable, AdviceRepository repository){
+        this.mCompositeDisposable = disposable;
+        this.mSchedulerProvider = schedule;
+        this.adviceRepository = repository;
+    }
+
 
     @Override
     public void loadAdvice() {
 
         mView.onLoading();
 
-        disposable.add(new AdviceRepository().loadAdvice()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+        mCompositeDisposable.add(adviceRepository.loadAdvice()
+        .subscribeOn(mSchedulerProvider.background())
+        .observeOn(mSchedulerProvider.ui())
         .subscribe(
                 (response)-> mView.onLoadComplete(response.getFortune()),
                 (throwable)-> mView.onLoadError(throwable)
@@ -50,6 +62,6 @@ public class ViewPresenter implements Presenter {
 
     @Override
     public void destroy() {
-        disposable.dispose();
+        mCompositeDisposable.dispose();
     }
 }
